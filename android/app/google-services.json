@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "628211897163",
+    "project_id": "sushior-a85a2",
+    "storage_bucket": "sushior-a85a2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:628211897163:android:bcb9c90a3303c4a8cb8ece",
+        "android_client_info": {
+          "package_name": "com.example.sushior"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAX7FFP2Pe5daAWxlKTArhc44MLsRk9HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
