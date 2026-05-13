@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/local_prefs.dart';
+import '../theme/app_colors.dart';
 import 'game_screen.dart';
 
 class NicknameScreen extends StatefulWidget {
@@ -54,31 +55,38 @@ class _NicknameScreenState extends State<NicknameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.scaffold,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        foregroundColor: Colors.black87,
         title: const Text('ニックネーム'),
       ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
           child: _loading
-              ? const Center(child: CircularProgressIndicator())
+              ? Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.tealOnSurface,
+                  ),
+                )
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 24),
                     const Text(
                       'ランキングに載せるニックネームを入力してください',
-                      style: TextStyle(fontSize: 16, color: Colors.black87),
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: AppColors.textSecondary,
+                      ),
                     ),
                     const SizedBox(height: 24),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFEBEBEB),
+                        color: AppColors.surfaceMuted,
                         borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: AppColors.divider.withValues(alpha: 0.45),
+                        ),
                       ),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 4),
@@ -86,10 +94,14 @@ class _NicknameScreenState extends State<NicknameScreen> {
                         controller: _controller,
                         maxLength: 20,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 22),
+                        style: const TextStyle(
+                          fontSize: 22,
+                          color: AppColors.textPrimary,
+                        ),
                         decoration: const InputDecoration(
                           border: InputBorder.none,
                           hintText: 'お寿司マスター',
+                          hintStyle: TextStyle(color: AppColors.textSecondary),
                           counterText: '',
                         ),
                         onSubmitted: (_) => _onStart(),
@@ -101,9 +113,10 @@ class _NicknameScreenState extends State<NicknameScreen> {
                       child: ElevatedButton(
                         onPressed: _onStart,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD9D9D9),
-                          foregroundColor: Colors.black87,
-                          elevation: 0,
+                          backgroundColor: AppColors.primaryCta,
+                          foregroundColor: AppColors.onPrimaryCta,
+                          elevation: 2,
+                          shadowColor: AppColors.header.withValues(alpha: 0.35),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(24),
                           ),

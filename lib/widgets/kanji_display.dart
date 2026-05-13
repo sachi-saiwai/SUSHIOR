@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-/// 出題中の難読漢字を大きく表示する角丸グレーボックス。
+import '../theme/app_colors.dart';
+
+/// 出題中の難読漢字を大きく表示する角丸パネル。
 class KanjiDisplay extends StatelessWidget {
   final String kanji;
 
@@ -11,8 +13,9 @@ class KanjiDisplay extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: const Color(0xFFD9D9D9),
+        color: AppColors.kanjiPanel,
         borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: AppColors.divider.withValues(alpha: 0.5)),
       ),
       child: Center(
         child: Padding(
@@ -24,7 +27,7 @@ class KanjiDisplay extends StatelessWidget {
               style: const TextStyle(
                 fontSize: 96,
                 fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                color: AppColors.textPrimary,
               ),
             ),
           ),

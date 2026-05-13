@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import '../data/kanji_data.dart';
+import '../theme/app_colors.dart';
 import '../models/kanji_question.dart';
 import '../widgets/answer_button.dart';
 import '../widgets/kanji_display.dart';
@@ -99,7 +100,7 @@ class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.scaffold,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -108,8 +109,15 @@ class _GameScreenState extends State<GameScreen> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
+                  color: AppColors.header,
                   borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.header.withValues(alpha: 0.25),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Row(
@@ -121,16 +129,16 @@ class _GameScreenState extends State<GameScreen> {
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: AppColors.onHeader,
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 16),
                       child: Text(
                         '$_score 問',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 16,
-                          color: Colors.black54,
+                          color: AppColors.onHeader.withValues(alpha: 0.85),
                         ),
                       ),
                     ),
@@ -146,6 +154,8 @@ class _GameScreenState extends State<GameScreen> {
                       child: AnswerButton(
                         label: '寿司',
                         onPressed: () => _answer(true),
+                        backgroundColor: AppColors.sushiYes,
+                        foregroundColor: AppColors.onChoice,
                       ),
                     ),
                     const SizedBox(width: 16),
@@ -153,6 +163,8 @@ class _GameScreenState extends State<GameScreen> {
                       child: AnswerButton(
                         label: '寿司じゃない',
                         onPressed: () => _answer(false),
+                        backgroundColor: AppColors.sushiNo,
+                        foregroundColor: AppColors.onSushiNo,
                       ),
                     ),
                   ],

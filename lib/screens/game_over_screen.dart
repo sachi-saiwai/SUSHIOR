@@ -4,6 +4,7 @@ import '../models/kanji_question.dart';
 import '../models/score_entry.dart';
 import '../services/local_prefs.dart';
 import '../services/score_repository.dart';
+import '../theme/app_colors.dart';
 import 'game_screen.dart';
 import 'title_screen.dart';
 
@@ -78,8 +79,10 @@ class _GameOverScreenState extends State<GameOverScreen> {
   @override
   Widget build(BuildContext context) {
     final reasonText = widget.timeUp ? 'タイムアップ!' : 'ざんねん!';
+    final headerColor =
+        widget.timeUp ? AppColors.header : AppColors.sushiYes;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.scaffold,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -88,17 +91,26 @@ class _GameOverScreenState extends State<GameOverScreen> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
+                  color: headerColor,
                   borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: headerColor.withValues(alpha: 0.28),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: Center(
                   child: Text(
                     reasonText,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: widget.timeUp
+                          ? AppColors.onHeader
+                          : AppColors.onChoice,
                     ),
                   ),
                 ),
@@ -107,8 +119,11 @@ class _GameOverScreenState extends State<GameOverScreen> {
               if (widget.missedKanji != null)
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFFF5F5F5),
+                    color: AppColors.surfaceMuted,
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppColors.divider.withValues(alpha: 0.55),
+                    ),
                   ),
                   padding: const EdgeInsets.all(16),
                   child: Column(
@@ -118,14 +133,16 @@ class _GameOverScreenState extends State<GameOverScreen> {
                         style: const TextStyle(
                           fontSize: 36,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         '${widget.missedKanji!.reading}・${widget.missedKanji!.isSushi ? "寿司ネタでした" : "寿司じゃありませんでした"}',
                         style: const TextStyle(
-                            fontSize: 14, color: Colors.black54),
+                          fontSize: 14,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                     ],
                   ),
@@ -135,7 +152,11 @@ class _GameOverScreenState extends State<GameOverScreen> {
               const SizedBox(height: 16),
               Expanded(
                 child: _loading
-                    ? const Center(child: CircularProgressIndicator())
+                    ? const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.tealOnSurface,
+                        ),
+                      )
                     : _buildRanking(),
               ),
               const SizedBox(height: 12),
@@ -147,8 +168,8 @@ class _GameOverScreenState extends State<GameOverScreen> {
                       child: OutlinedButton(
                         onPressed: _backToTitle,
                         style: OutlinedButton.styleFrom(
-                          foregroundColor: Colors.black87,
-                          side: const BorderSide(color: Color(0xFFBDBDBD)),
+                          foregroundColor: AppColors.textPrimary,
+                          side: const BorderSide(color: AppColors.outline),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -168,9 +189,10 @@ class _GameOverScreenState extends State<GameOverScreen> {
                       child: ElevatedButton(
                         onPressed: _retry,
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFD9D9D9),
-                          foregroundColor: Colors.black87,
-                          elevation: 0,
+                          backgroundColor: AppColors.primaryCta,
+                          foregroundColor: AppColors.onPrimaryCta,
+                          elevation: 2,
+                          shadowColor: AppColors.header.withValues(alpha: 0.35),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -196,15 +218,21 @@ class _GameOverScreenState extends State<GameOverScreen> {
   Widget _buildScoreCard() {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFEBEBEB),
+        color: AppColors.surfaceCard,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.divider.withValues(alpha: 0.45),
+        ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
       child: Column(
         children: [
           Text(
             widget.nickname,
-            style: const TextStyle(fontSize: 14, color: Colors.black54),
+            style: const TextStyle(
+              fontSize: 14,
+              color: AppColors.textSecondary,
+            ),
           ),
           const SizedBox(height: 4),
           Row(
@@ -217,13 +245,16 @@ class _GameOverScreenState extends State<GameOverScreen> {
                 style: const TextStyle(
                   fontSize: 48,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: AppColors.textPrimary,
                 ),
               ),
               const SizedBox(width: 4),
               const Text(
                 '問正解',
-                style: TextStyle(fontSize: 16, color: Colors.black54),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textSecondary,
+                ),
               ),
             ],
           ),
@@ -234,7 +265,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
                 'ベストスコア更新!',
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.deepOrange,
+                  color: AppColors.accentBest,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -244,8 +275,10 @@ class _GameOverScreenState extends State<GameOverScreen> {
               padding: const EdgeInsets.only(top: 4),
               child: Text(
                 '現在 $_rank 位',
-                style:
-                    const TextStyle(fontSize: 14, color: Colors.black87),
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppColors.textPrimary,
+                ),
               ),
             ),
         ],
@@ -258,14 +291,17 @@ class _GameOverScreenState extends State<GameOverScreen> {
       return Center(
         child: Container(
           decoration: BoxDecoration(
-            color: const Color(0xFFF5F5F5),
+            color: AppColors.surfaceList,
             borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: AppColors.divider.withValues(alpha: 0.4),
+            ),
           ),
           padding: const EdgeInsets.all(16),
           child: const Text(
             'Firebase が設定されていないため\nランキングは表示できません',
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.black54),
+            style: TextStyle(color: AppColors.textSecondary),
           ),
         ),
       );
@@ -273,21 +309,27 @@ class _GameOverScreenState extends State<GameOverScreen> {
     if (_topScores.isEmpty) {
       return Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFF5F5F5),
+          color: AppColors.surfaceList,
           borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: AppColors.divider.withValues(alpha: 0.4),
+          ),
         ),
         padding: const EdgeInsets.all(16),
         alignment: Alignment.center,
         child: const Text(
           'まだランキングがありません',
-          style: TextStyle(color: Colors.black54),
+          style: TextStyle(color: AppColors.textSecondary),
         ),
       );
     }
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFFF5F5F5),
+        color: AppColors.surfaceList,
         borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.divider.withValues(alpha: 0.4),
+        ),
       ),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       child: Column(
@@ -297,11 +339,14 @@ class _GameOverScreenState extends State<GameOverScreen> {
             padding: EdgeInsets.symmetric(vertical: 4),
             child: Text(
               'ランキング TOP 10',
-              style:
-                  TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: AppColors.tealOnSurface,
+              ),
             ),
           ),
-          const Divider(height: 1),
+          Divider(height: 1, color: AppColors.divider.withValues(alpha: 0.7)),
           Expanded(
             child: ListView.builder(
               itemCount: _topScores.length,
@@ -316,15 +361,19 @@ class _GameOverScreenState extends State<GameOverScreen> {
                         child: Text(
                           '${i + 1}',
                           style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black54),
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textSecondary,
+                          ),
                         ),
                       ),
                       Expanded(
                         child: Text(
                           e.nickname,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(fontSize: 15),
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
                       ),
                       Text(
@@ -332,7 +381,7 @@ class _GameOverScreenState extends State<GameOverScreen> {
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: AppColors.tealOnSurface,
                         ),
                       ),
                     ],

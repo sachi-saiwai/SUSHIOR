@@ -94,8 +94,15 @@ class KanjiData {
     KanjiQuestion(kanji: '蟷螂', reading: 'かまきり', isSushi: false),
     KanjiQuestion(kanji: '蝸牛', reading: 'かたつむり', isSushi: false),
     KanjiQuestion(kanji: '鳶', reading: 'とび', isSushi: false),
+    // 「魚」がつくけど寿司ネタじゃない引っ掛け
+    KanjiQuestion(kanji: '金魚', reading: 'きんぎょ', isSushi: false),
+    KanjiQuestion(kanji: '木魚', reading: 'もくぎょ', isSushi: false),
+    KanjiQuestion(kanji: '人魚', reading: 'にんぎょ', isSushi: false),
+    KanjiQuestion(kanji: '雑魚', reading: 'ざこ', isSushi: false),
+    KanjiQuestion(kanji: '山椒魚', reading: 'さんしょううお', isSushi: false),
+    KanjiQuestion(kanji: '鯱', reading: 'しゃち', isSushi: false),
   ];
 
-  /// 全80問。ゲーム開始時にシャッフルして使う。
+  /// 全問。ゲーム開始時にシャッフルして使う。
   static const List<KanjiQuestion> all = [..._sushi, ..._notSushi];
 }

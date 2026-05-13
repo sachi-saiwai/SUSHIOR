@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../services/local_prefs.dart';
+import '../theme/app_colors.dart';
 import 'nickname_screen.dart';
 
 class TitleScreen extends StatefulWidget {
@@ -41,7 +42,7 @@ class _TitleScreenState extends State<TitleScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.scaffold,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 24),
@@ -51,8 +52,15 @@ class _TitleScreenState extends State<TitleScreen> {
               const SizedBox(height: 48),
               Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
+                  color: AppColors.header,
                   borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.header.withValues(alpha: 0.22),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 padding: const EdgeInsets.symmetric(vertical: 24),
                 child: const Center(
@@ -61,7 +69,7 @@ class _TitleScreenState extends State<TitleScreen> {
                     style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                      color: AppColors.onHeader,
                     ),
                   ),
                 ),
@@ -70,14 +78,21 @@ class _TitleScreenState extends State<TitleScreen> {
               const Text(
                 '難読漢字が次々出てきます。\n寿司ネタなら「寿司」、\nそれ以外なら「寿司じゃない」をタップ。\n制限時間60秒、1問でも間違えたらゲームオーバー。',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 15, color: Colors.black87, height: 1.6),
+                style: TextStyle(
+                  fontSize: 15,
+                  color: AppColors.textSecondary,
+                  height: 1.6,
+                ),
               ),
               const Spacer(),
               if (!_loading)
                 Container(
                   decoration: BoxDecoration(
-                    color: const Color(0xFFEBEBEB),
+                    color: AppColors.surfaceCard,
                     borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: AppColors.divider.withValues(alpha: 0.5),
+                    ),
                   ),
                   padding:
                       const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
@@ -86,7 +101,10 @@ class _TitleScreenState extends State<TitleScreen> {
                     children: [
                       const Text(
                         'ベストスコア',
-                        style: TextStyle(fontSize: 14, color: Colors.black54),
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: AppColors.textSecondary,
+                        ),
                       ),
                       const SizedBox(width: 12),
                       Text(
@@ -94,7 +112,7 @@ class _TitleScreenState extends State<TitleScreen> {
                         style: const TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black87,
+                          color: AppColors.textPrimary,
                         ),
                       ),
                     ],
@@ -106,9 +124,10 @@ class _TitleScreenState extends State<TitleScreen> {
                 child: ElevatedButton(
                   onPressed: _onStart,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFD9D9D9),
-                    foregroundColor: Colors.black87,
-                    elevation: 0,
+                    backgroundColor: AppColors.primaryCta,
+                    foregroundColor: AppColors.onPrimaryCta,
+                    elevation: 2,
+                    shadowColor: AppColors.header.withValues(alpha: 0.35),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),

@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
 
-/// モックアップに揃えた角丸グレーの大きな2択ボタン。
+import '../theme/app_colors.dart';
+
+/// 角丸の大きな2択ボタン（寿司／寿司じゃないで色分け）。
 class AnswerButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
+  final Color backgroundColor;
+  final Color foregroundColor;
 
   const AnswerButton({
     super.key,
     required this.label,
     required this.onPressed,
+    this.backgroundColor = AppColors.surfaceMuted,
+    this.foregroundColor = AppColors.textPrimary,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: const Color(0xFFD9D9D9),
+      color: backgroundColor,
       borderRadius: BorderRadius.circular(24),
+      elevation: 2,
+      shadowColor: Colors.black26,
       child: InkWell(
         borderRadius: BorderRadius.circular(24),
         onTap: onPressed,
@@ -25,10 +33,10 @@ class AnswerButton extends StatelessWidget {
             child: Text(
               label,
               textAlign: TextAlign.center,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 22,
-                color: Colors.black87,
-                fontWeight: FontWeight.w500,
+                color: foregroundColor,
+                fontWeight: FontWeight.w600,
               ),
             ),
           ),
